@@ -4,6 +4,8 @@ fn main() {
     // read the dictionary files
     let wordlist = include_str!("data/wordlist.txt");
     let wordlist_sorted = include_str!("data/wordlist_sorted.txt");
+    let wordlist = &[" ", &wordlist.replace("\n", " ")[..]].join("")[..];
+    let wordlist_sorted = &[" ", &wordlist_sorted.replace("\n", " ")[..]].join("")[..];
 
     // get into a loop so that we can run it multiple times
     loop {
@@ -41,7 +43,7 @@ fn main() {
             for index in indices {
                 println!(
                     "{}",
-                    sentence_case(&wordlist[index + 1..index + input.len() - 1])
+                    sentence_case(&wordlist[index + 1..index - 1 + input.len()])
                 );
             }
         }
@@ -62,6 +64,6 @@ fn sentence_case(s: &str) -> String {
     let mut c = s.chars();
     match c.next() {
         None => String::new(),
-        Some(f) => f.to_uppercase().collect::<String>() + &c.as_str()[..].to_lowercase(),
+        Some(f) => f.to_uppercase().collect::<String>() + c.as_str(),
     }
 }
