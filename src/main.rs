@@ -49,9 +49,9 @@ fn main() {
         // ask if we want to go again
         print!("Would you like to do it again? (y/N)");
         io::stdout().flush().unwrap();
-        let mut responce = String::new();
-        io::stdin().read_line(&mut responce).unwrap();
-        if !(responce.contains("Y") || responce.contains("y")) {
+        let mut response = String::new();
+        io::stdin().read_line(&mut response).unwrap();
+        if !(response.contains("Y") || response.contains("y")) {
             break;
         }
     }
