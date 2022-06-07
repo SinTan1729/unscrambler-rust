@@ -17,7 +17,7 @@ fn main() {
             None => (),
             _ => {
                 println!("Please enter only one scrambled word.");
-                std::process::exit(1);
+                continue;
             }
         }
 
@@ -36,7 +36,6 @@ fn main() {
         // print output
         if indices.len() == 0 {
             println!("No matches found!");
-            std::process::exit(1);
         } else {
             println!("The matched words are:");
             for index in indices {
