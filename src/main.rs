@@ -1,9 +1,22 @@
-use std::io::{self, Write};
+use std::io::{self, prelude::*, Write};
+use xz2::read::XzDecoder;
 
 fn main() {
-    // read the dictionary files
-    let wordlist = include_str!("data/wordlist.txt");
-    let wordlist_sorted = include_str!("data/wordlist_sorted.txt");
+    // load the compressed dictionary files (embedded in compile-time)
+    let wordlist_cmp: &[u8] = include_bytes!("dict/wordlist.txt.xz");
+    let wordlist_sorted_cmp: &[u8] = include_bytes!("dict/wordlist_sorted.txt.xz");
+
+    // decompress the dictionary files
+    let mut decompressor = XzDecoder::new(wordlist_cmp);
+    let mut decompressor_sorted = XzDecoder::new(wordlist_sorted_cmp);
+    let mut wordlist = String::new();
+    let mut wordlist_sorted = String::new();
+    decompressor.read_to_string(&mut wordlist).unwrap();
+    decompressor_sorted
+        .read_to_string(&mut wordlist_sorted)
+        .unwrap();
+
+    // some formatting of the dictionary data
     let wordlist = &[" ", &wordlist.replace("\n", " ")[..]].join("")[..];
     let wordlist_sorted = &[" ", &wordlist_sorted.replace("\n", " ")[..]].join("")[..];
 
