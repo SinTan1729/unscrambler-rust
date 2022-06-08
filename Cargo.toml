@@ -7,3 +7,6 @@ edition = "2021"
 
 [dependencies]
 xz2 = "0.1.7"
+
+[build-dependencies]
+xz2 = "0.1.7"
