@@ -2,6 +2,9 @@ use std::io::{self, prelude::*, Write};
 use xz2::read::XzDecoder;
 
 fn main() {
+    // welcome message
+    println!("*** Welcome to unscrambler! ***");
+
     // load the compressed dictionary files (embedded in compile-time)
     let wordlist_cmp: &[u8] = include_bytes!("dict/wordlist.txt.xz");
     let wordlist_sorted_cmp: &[u8] = include_bytes!("dict/wordlist_sorted.txt.xz");
@@ -52,17 +55,29 @@ fn main() {
         if indices.len() == 0 {
             println!("No matches found!");
         } else {
-            println!("The matched words are:");
+            let mut out_list = Vec::new();
             for index in indices {
-                println!(
-                    "{}",
-                    sentence_case(&wordlist[index + 1..index - 1 + input.len()])
-                );
+                out_list.push(sentence_case(&wordlist[index + 1..index - 1 + input.len()]));
+            }
+            if out_list.len() == 1 {
+                println!("The only matched word is {}.", out_list[0]);
+            } else {
+                print!("The {} matched words are ", out_list.len());
+                out_list.iter().enumerate().for_each(|(pos, word)| {
+                    print!("{}", word);
+                    if pos < out_list.len() - 2 {
+                        print!(", ");
+                    } else if pos < out_list.len() - 1 {
+                        print!(" and ");
+                    }
+                });
+                print!(".\n");
+                io::stdout().flush().unwrap();
             }
         }
 
         // ask if we want to go again
-        print!("Would you like to do it again? (y/N)");
+        print!("Would you like to do it again? (y/N): ");
         io::stdout().flush().unwrap();
         let mut response = String::new();
         io::stdin().read_line(&mut response).unwrap();
