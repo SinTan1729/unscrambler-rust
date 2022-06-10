@@ -1,8 +1,8 @@
 # Unscrambler written in Rust
 
-I'm learning Rust, so this is just a rewrite of an simple old project in Rust.
+I'm learning Rust, so this is just a rewrite of a simple old project into Rust.
 
-[Link to old project.](https://github.com/SinTan1729/Unscrambler)
+[Link to old C++ project.](https://github.com/SinTan1729/Unscrambler)
 
 ## Usage
 
